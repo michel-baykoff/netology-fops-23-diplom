@@ -37,6 +37,7 @@ jobs:
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       TF_VAR_ssh_public_key: ${{secrets.ssh_public_key}}
+      TF_VAR_ghub_actions_output_fix: ${{secrets.ghub_actions_output_fix}}
 
     steps:
     - name: Checkout
