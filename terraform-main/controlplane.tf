@@ -47,7 +47,7 @@ resource "yandex_compute_instance" "controlplane" {
   }
 
     metadata = {
-      ssh-keys = "debian:${local.ssh-public-key}"
+      ssh-keys = "debian:${local.ssh_public_key}"
       serial-port-enable = "1"
 #      user-data = templatefile(
 #      "${path.module}/templates/cloud-config.tftpl",
