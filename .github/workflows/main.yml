@@ -70,6 +70,6 @@ jobs:
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.destroy == 'true'
       run: |
         terraform -chdir=./terraform-main destroy -input=false -auto-approve \
-        -var="token=${{ secrets.YC_TOKEN }}" \
-        -var="cloud_id=${{ secrets.YC_CLOUD_ID }}" \
-        -var="folder_id=${{ secrets.YC_FOLDER_ID }}"
+        -var="token=${{ netology.YC_TOKEN }}" \
+        -var="cloud_id=${{ netology.YC_CLOUD_ID }}" \
+        -var="folder_id=${{ netology.YC_FOLDER_ID }}"
