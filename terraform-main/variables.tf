@@ -174,10 +174,10 @@ variable "controlplane_resources" {
     platform_id   = string
   })
   default = {
-    cores         = 4
-    memory        = 8
+    cores         = 2
+    memory        = 4
     size          = 10
-    core_fraction = 20
+    core_fraction = 100
     platform_id   = "standard-v3"
   }
 }
@@ -197,10 +197,33 @@ variable "worker_resources" {
     platform_id   = string
   })
   default = {
-    cpu           = 4
-    ram           = 8
+    cpu           = 2
+    ram           = 2
     disk          = 10
-    core_fraction = 20
+    core_fraction = 100
     platform_id   = "standard-v3"
   }
 }
+
+
+#Cloudconfig vars
+
+variable "cloudconfig_username" {
+  type    = string
+  default = "op"
+}
+
+#variable "user_groups" {
+#  type    = string
+#  default = "sudo"
+#}
+#
+#variable "sudo_rule" {
+#  type    = string
+#  default = "ALL=(ALL) NOPASSWD:ALL"
+#}
+
+#variable "ssh_public_key" {
+#  type = string
+#  default = file("../../.ssh/id_ed25519.pub")
+#}

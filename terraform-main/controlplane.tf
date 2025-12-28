@@ -46,11 +46,21 @@ resource "yandex_compute_instance" "controlplane" {
     }
   }
 
-  #  metadata = {
-  #    ssh-keys = "debian:${local.ssh-keys}"
-  #    serial-port-enable = "1"
-  #    user-data          = data.template_file.cloudinit.rendered
-  #  }
+    metadata = {
+      ssh-keys = "debian:${local.ssh-public-key}"
+      serial-port-enable = "1"
+#      user-data = templatefile(
+#      "${path.module}/templates/cloud-config.tftpl",
+#        {
+#        username        = var.cloudconfig_username
+#        user_groups    = var.cloudconfig_groups
+#        sudo_rule      = var.cloudconfig_sudo_rule
+#        ssh_public_key  = local.ssh-public-key
+#        hostname        = var.cloudconfig_hostname
+#        environment     = var.cloudconfig_environment
+#        }
+#      )
+    }
 
   network_interface {
    

@@ -5,3 +5,7 @@ locals {
     yandex_vpc_subnet.diplom-subnet3.id
   ]
 }
+
+locals {
+  ssh-public-key = file("../../.ssh/id_ed25519.pub")
+}
