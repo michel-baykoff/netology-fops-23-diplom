@@ -47,7 +47,7 @@ jobs:
         terraform_version: "1.14.0"
 
     - name: Terraform Init
-      run: terraform -chdir=./terraform-main init
+      run: env & terraform -chdir=./terraform-main init
       env:
         TOKEN: ${{ secrets.YC_TOKEN }}
         CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
