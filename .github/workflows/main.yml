@@ -14,12 +14,12 @@ on:
   workflow_dispatch:
     inputs:
       apply:
-        description: 'set "true" to apply changes'
+        description: 'check this to apply changes'
         required: false
         type: boolean
         default: 'false'
       destroy:
-        description: 'Set to "true" to destroy infrastructure'
+        description: 'check this to destroy infrastructure'
         required: false
         type: boolean
         default: 'false'
