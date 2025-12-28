@@ -29,13 +29,14 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-
+    environment: netology
     env:
-      TOKEN: ${{ netology.YC_TOKEN }}
-      CLOUD_ID: ${{ netology.YC_CLOUD_ID }}
-      FOLDER_ID: ${{ netology.YC_FOLDER_ID }}
-      AWS_ACCESS_KEY_ID: ${{ netology.AWS_ACCESS_KEY }}
-      AWS_SECRET_ACCESS_KEY: ${{ netology.AWS_SECRET_KEY }}
+      TOKEN: ${{ secrets.YC_TOKEN }}
+      CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
+      FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      TF_VAR_ssh_public_key: ${{secrets.ssh_public_key}}
 
     steps:
     - name: Checkout
@@ -47,7 +48,7 @@ jobs:
         terraform_version: "1.14.0"
 
     - name: Terraform Init
-      run: terraform -chdir=./terraform-main init
+      run: env & terraform -chdir=./terraform-main init
 
     - name: Terraform Format and Validate
       run: terraform -chdir=./terraform-main validate
@@ -55,9 +56,9 @@ jobs:
     - name: Terraform Plan
       run: |
         terraform -chdir=./terraform-main plan -input=false -out=tfplan \
-        -var="token=${{ netology.YC_TOKEN }}" \
-        -var="cloud_id=${{ netology.YC_CLOUD_ID }}" \
-        -var="folder_id=${{ netology.YC_FOLDER_ID }}"
+        -var="token=${{ secrets.YC_TOKEN }}" \
+        -var="cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+        -var="folder_id=${{ secrets.YC_FOLDER_ID }}"
 
     - name: Terraform Apply (Automatic)
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -71,6 +72,6 @@ jobs:
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.destroy == 'true'
       run: |
         terraform -chdir=./terraform-main destroy -input=false -auto-approve \
-        -var="token=${{ netology.YC_TOKEN }}" \
-        -var="cloud_id=${{ netology.YC_CLOUD_ID }}" \
-        -var="folder_id=${{ netology.YC_FOLDER_ID }}"
+        -var="token=${{ secrets.YC_TOKEN }}" \
+        -var="cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+        -var="folder_id=${{ secrets.YC_FOLDER_ID }}"
