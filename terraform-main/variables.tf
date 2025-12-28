@@ -230,3 +230,9 @@ variable "ssh_public_key" {
   default = ""
   description="please set it via OS ENV TF_VAR_SSH_PUBLIC_KEY="
 }
+
+variable "ghub_actions_output_fix" {
+  type = bool
+  default = false
+  description = "set to true via OS ENV TF_VAR_github_actions_output_fix"
+}
