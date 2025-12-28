@@ -48,12 +48,6 @@ jobs:
 
     - name: Terraform Init
       run: env & terraform -chdir=./terraform-main init
-      env:
-        TOKEN: ${{ secrets.YC_TOKEN }}
-        CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
-        FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
-        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
 
     - name: Terraform Format and Validate
       run: terraform -chdir=./terraform-main validate
