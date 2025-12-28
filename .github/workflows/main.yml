@@ -36,6 +36,7 @@ jobs:
       FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      TF_VAR_ssh_public_key: ${{secrets.ssh_public_key}}
 
     steps:
     - name: Checkout
