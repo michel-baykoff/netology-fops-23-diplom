@@ -1,3 +1,4 @@
+
 #variable "token" {
 #  type        = string
 #  description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
@@ -223,7 +224,9 @@ variable "cloudconfig_username" {
 #  default = "ALL=(ALL) NOPASSWD:ALL"
 #}
 
-#variable "ssh_public_key" {
-#  type = string
-#  default = file("../../.ssh/id_ed25519.pub")
-#}
+#github actions fix
+variable "ssh_public_key" {
+  type = string
+  default = ""
+  description="please set it via OS ENV TF_VAR_SSH_PUBLIC_KEY="
+}
