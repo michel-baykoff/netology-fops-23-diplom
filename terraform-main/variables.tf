@@ -199,7 +199,7 @@ variable "worker_resources" {
   })
   default = {
     cpu           = 2
-    ram           = 2
+    ram           = 4
     disk          = 10
     core_fraction = 100
     platform_id   = "standard-v3"
