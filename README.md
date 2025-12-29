@@ -231,9 +231,9 @@ terraform {
    Итого 6 ВМ.
    
    Что бы упростить дальнейшую установку кластера в репозитории создадим директорию `templates` в которой создадим файл шаблона `ansible.tftpl` благодаря которому   
-   на основе вывода терраформ будет создан файл инвентори для `ansible`.
+   на основе вывода терраформ будет создан файл инвентори для `ansible`.   
 
-   Применим код и проверим, что все ресурсы создаются успешно.
+   Применим код и проверим, что все ресурсы создаются успешно.   
    ![вм в разных зонах](img/)
    ![содержимое бакета](img/)
 
@@ -249,34 +249,34 @@ terraform {
    `ansible-playbook -i inventory/diplomcluster/hosts.yaml -u debian --become --become-user=root --private-key=~/.ssh/id_ed25519 -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"' cluster.yml --flush-cache -f 6 --extra-vars "kubeconfig_localhost=true"`
    Первая попытка установки оказалась не успешной из-за отсутствия необходимых зависимостей из ansible galaxy которые по мере необходимости устанавливалис командой  
    `ansible-galaxy collection install community.crypto`. В итоге Kubernetes кластер был успешно установлен, а в директории с артефактами был скопирован конфиг для
-   `kubectl`. Копируем в соответствии с контрольными точками дипломной конфиг командой: 
-   `cp ~/kubespray/inventory/diplomcluster/artifacts/admin.conf ~/.kube/config`
-   Проверяем работоспособность кластера командой: `kubectl get pods --all-namespaces`
+   `kubectl`. Копируем в соответствии с контрольными точками дипломной конфиг командой:  
+   `cp ~/kubespray/inventory/diplomcluster/artifacts/admin.conf ~/.kube/config`   
+   Проверяем работоспособность кластера командой: `kubectl get pods --all-namespaces`   
    ![вывод команды](img/)
    
    
 4. ### Создание тестового приложения
    
-   Для первичного создания и тестирования сборки приложения будем использовать докер. Создаем статичную страничку `index.html`.
-   ![index.html](/img)
-   Далее напишем `Dockerfile` который на основе образа `nginx` создает контейнер с нашей тестовой страницей. Запустим локально контейнер и проверим работоспособность.
-   ![Dockerfile](/img)
-   ![curl](/img)
-   Загрузим готовый тестовый образ на `hub.docker.com`
-   ![result](/img)
+   Для первичного создания и тестирования сборки приложения будем использовать докер. Создаем статичную страничку `index.html`.   
+   ![index.html](/img)   
+   Далее напишем `Dockerfile` который на основе образа `nginx` создает контейнер с нашей тестовой страницей. Запустим локально контейнер и проверим работоспособность.   
+   ![Dockerfile](/img)   
+   ![curl](/img)   
+   Загрузим готовый тестовый образ на `hub.docker.com`   
+   ![result](/img)   
 
 5. ### Подготовка cистемы мониторинга и деплой приложения
    
-   Воспользуемся репозиторием prometheus-community для его установки с помощью helm:
-   `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
-   Далее произведем установку системы мониторинга в кластер:
-   `helm upgrade --install monitoring prometheus-community/kube-prometheus-stack --create-namespace -n monitoring -f values.yaml`
-   ![helm output](img/)
+   Воспользуемся репозиторием prometheus-community для его установки с помощью helm:   
+   `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`   
+   Далее произведем установку системы мониторинга в кластер:   
+   `helm upgrade --install monitoring prometheus-community/kube-prometheus-stack --create-namespace -n monitoring -f values.yaml`   
+   ![helm output](img/)   
    Далее создадим файл Deployment где опишем деплоймент нашего приложения, поскольку у нас 3 воркер ноды создадим 3 копии приложения и применим его.    
    ![deployment output](img/)
 
-   Так же создадим сервис типа `NodePort` для тестирования доступности приложения и последующего использования. Применим его и проверим доступность приложения.
-   ![service output](img/)
+   Так же создадим сервис типа `NodePort` для тестирования доступности приложения и последующего использования. Применим его и проверим доступность приложения.   
+   ![service output](img/)   
    
 6. ### Деплой инфраструктуры в terraform pipeline
    
