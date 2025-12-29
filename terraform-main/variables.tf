@@ -177,8 +177,8 @@ variable "controlplane_resources" {
   default = {
     cores         = 2
     memory        = 4
-    size          = 10
-    core_fraction = 20
+    size          = 20
+    core_fraction = 100
     platform_id   = "standard-v3"
   }
 }
@@ -200,8 +200,8 @@ variable "worker_resources" {
   default = {
     cpu           = 4
     ram           = 8
-    disk          = 10
-    core_fraction = 20
+    disk          = 20
+    core_fraction = 100
     platform_id   = "standard-v3"
   }
 }
