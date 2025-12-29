@@ -152,7 +152,7 @@
    Скачиваем архив с бинарником, распаковываем и для удобства копируем в папку /usr/bin/.  
    Создаем репозиторий где будем хранить код [ссылка](https://github.com/michel-baykoff/netology-fops-23-diplom).  
    Пишем код в котором описываем провайдер для яндекс.облако:
-   '''
+`
 terraform {
   required_providers {
     yandex = {
@@ -169,11 +169,11 @@ provider "yandex" {
   folder_id = var.folder_id
   zone      = var.default_zone
 }
-'''
+`
 
    Далее пишем код для создания сервисного аккаунта и назначаем ему роль редактора:
 
-'''
+`
 resource "yandex_iam_service_account" "service" {
   folder_id = var.folder_id
   name      = var.account_name
@@ -184,11 +184,11 @@ resource "yandex_resourcemanager_folder_iam_member" "service_editor" {
   role      = "editor"
   member    = "serviceAccount:${yandex_iam_service_account.service.id}"
 }
-'''
+`
 
    Далее подготавливаем код для создания s3 bucket'a и подключаем S3 backend provider:
 
-'''
+`
 resource "yandex_iam_service_account_static_access_key" "terraform_service_account_key" {
   service_account_id = yandex_iam_service_account.service.id
 }
@@ -225,7 +225,7 @@ terraform {
     skip_requesting_account_id = true
   }
 }
-'''
+`
 
 3. ### Создание Kubernetes кластера
 
