@@ -144,11 +144,97 @@
 
 ---
 ## Выполнение дипломного практикума
+1. ### Введение 
+   Цель дипломной работы развертывание и подготовка инфраструктуры для обеспечения разработки в соответствии с принципами CI/CD (Continuous Integration/Continuous Delivery) и IaC (Infrastructure as Code)
+   
+2. ### Создание облачной инфраструктуры
+   Для создания облачной инфраструктуры будем использовать Терраформ (v1.14.0) на виртуальной машине с которой будем управлять инфраструктурой (использовал OS Linux Debian12).  
+   Скачиваем архив с бинарником, распаковываем и для удобства копируем в папку /usr/bin/.  
+   Создаем репозиторий где будем хранить код [ссылка](https://github.com/michel-baykoff/netology-fops-23-diplom).  
+   Пишем код в котором описываем провайдер для яндекс.облако:
+   '''
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">= 1.14"
+}
 
-1. ### Создание облачной инфраструктуры
-2. ### Создание Kubernetes кластера
-3. ### Создание тестового приложения
-4. ### Подготовка cистемы мониторинга и деплой приложения
-5. ### Деплой инфраструктуры в terraform pipeline
-6. ### Установка и настройка CI/CD
-7. ### Выводы
+provider "yandex" {
+    token     = var.token
+  #  service_account_key_file = "/home/mikhail/key.json"
+  cloud_id  = var.cloud_id
+  folder_id = var.folder_id
+  zone      = var.default_zone
+}
+'''
+
+   Далее пишем код для создания сервисного аккаунта и назначаем ему роль редактора:
+
+'''
+resource "yandex_iam_service_account" "service" {
+  folder_id = var.folder_id
+  name      = var.account_name
+}
+
+resource "yandex_resourcemanager_folder_iam_member" "service_editor" {
+  folder_id = var.folder_id
+  role      = "editor"
+  member    = "serviceAccount:${yandex_iam_service_account.service.id}"
+}
+'''
+
+   Далее подготавливаем код для создания s3 bucket'a и подключаем S3 backend provider:
+
+'''
+resource "yandex_iam_service_account_static_access_key" "terraform_service_account_key" {
+  service_account_id = yandex_iam_service_account.service.id
+}
+
+resource "yandex_storage_bucket" "tf-bucket" {
+  bucket     = "tf-state-eiw1ooy4ierah1ahregh"
+  access_key = yandex_iam_service_account_static_access_key.terraform_service_account_key.access_key
+  secret_key = yandex_iam_service_account_static_access_key.terraform_service_account_key.secret_key
+
+  anonymous_access_flags {
+    read = false
+    list = false
+  }
+
+  provisioner "local-exec" {
+    command = "echo export AWS_ACCESS_KEY=${yandex_iam_service_account_static_access_key.terraform_service_account_key.access_key} > ./tfbackend.tfvars"
+  }
+
+  provisioner "local-exec" {
+    command = "echo export AWS_SECRET_KEY=${yandex_iam_service_account_static_access_key.terraform_service_account_key.secret_key} >> ./tfbackend.tfvars"
+  }
+}
+
+terraform {
+  backend "s3" {
+    bucket = "tf-state-eiw1ooy4ierah1ahregh"
+    key = "tf-state/terraform-s3.tfstate"
+    region = "ru-central1"
+
+    endpoint = "https://storage.yandexcloud.net"
+
+    skip_region_validation = true
+    skip_credentials_validation = true
+    skip_requesting_account_id = true
+  }
+}
+'''
+
+3. ### Создание Kubernetes кластера
+
+4. ### Создание тестового приложения
+
+5. ### Подготовка cистемы мониторинга и деплой приложения
+
+6. ### Деплой инфраструктуры в terraform pipeline
+
+7. ### Установка и настройка CI/CD
+
+8. ### Выводы
