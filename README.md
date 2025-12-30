@@ -296,11 +296,11 @@ Terraform ci/cd доступен по [ссылке](https://github.com/michel-b
 В результате выполнения данной дипломной работы мы реализовали автоматизированную систему управления инфраструктурой и доставки кода на основе принципов IaC и CI/CD.
 
 #### Ссылки
-[Репозиторий Терраформ](https://github.com/michel-baykoff/netology-fops-23-diplom/) 
-[Terraform workflow](https://github.com/michel-baykoff/netology-fops-23-diplom/actions/workflows/main.yml)
-[Репозиторий тестового приложения](https://github.com/michel-baykoff/netology-fops-23-diplom-site/)
-[CI/CD GitHub Workflow](https://github.com/michel-baykoff/netology-fops-23-diplom-site/actions/workflows/main.yml)
-[Docker Registry на hub.docker.com](https://hub.docker.com/r/sk3pt1k/netology-diplom-repository)
+[Репозиторий Терраформ](https://github.com/michel-baykoff/netology-fops-23-diplom/)   
+[Terraform workflow](https://github.com/michel-baykoff/netology-fops-23-diplom/actions/workflows/main.yml)  
+[Репозиторий тестового приложения](https://github.com/michel-baykoff/netology-fops-23-diplom-site/)  
+[CI/CD GitHub Workflow](https://github.com/michel-baykoff/netology-fops-23-diplom-site/actions/workflows/main.yml)  
+[Docker Registry на hub.docker.com](https://hub.docker.com/r/sk3pt1k/netology-diplom-repository)  
 
 Приложения в Kubernetes Cluster
 ```
