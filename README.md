@@ -265,7 +265,7 @@ terraform {
 Далее произведем установку системы мониторинга в кластер:   
 `helm upgrade --install monitoring prometheus-community/kube-prometheus-stack --create-namespace -n monitoring -f values.yaml`   
 ![helm output](img/9.png)   
-Далее создадим файл `Deployment.yaml` где опишем деплоймент нашего приложения, поскольку у нас 3 воркер ноды создадим 3 копии приложения и применим его.    
+Далее создадим файл `Deployment.yaml` где опишем деплоймент нашего приложения, поскольку у нас 3 воркер ноды создадим 3 копии приложения и применим наш манифест.    
 Так же создадим сервис типа `NodePort` для тестирования доступности приложения и последующего использования.   
 ![deployment output](img/10.png)
 
